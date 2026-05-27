@@ -13,6 +13,7 @@
             <a href="{{ route('home') }}" class="brand"><span class="logo">🏔️</span> {{ config('app.name') }}</a>
             <div class="nav-links">
                 <a href="{{ route('home') }}" class="nav-link">{{ __('Home') }}</a>
+                <a href="{{ route('calculator.index') }}" class="nav-link">🚗 {{ __('Customs Duty Calculator') }}</a>
 
                 @auth
                     @if (auth()->user()->isCompany())

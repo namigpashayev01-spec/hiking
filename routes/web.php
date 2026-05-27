@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\CompanyAuthController;
 use App\Http\Controllers\Company\DashboardController as CompanyDashboardController;
 use App\Http\Controllers\Company\TourController as CompanyTourController;
+use App\Http\Controllers\CustomsCalculatorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocaleController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tours/{tour:slug}', [HomeController::class, 'show'])->name('tours.show');
 Route::get('/locale/{locale}', [LocaleController::class, 'switch'])->name('locale.switch');
+
+// Customs auto duty calculator (DGK API)
+Route::get('/calculator', [CustomsCalculatorController::class, 'index'])->name('calculator.index');
+Route::post('/calculator', [CustomsCalculatorController::class, 'calculate'])->name('calculator.calculate');
 
 /*
 |--------------------------------------------------------------------------

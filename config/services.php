@@ -35,4 +35,13 @@ return [
         ],
     ],
 
+    // State Customs Committee (DGK) auto duty calculator API.
+    'customs' => [
+        'calc_auto_duty_url' => env(
+            'CUSTOMS_CALC_AUTO_DUTY_URL',
+            'https://c2b-fbusiness.customs.gov.az/api/v1/dictionaries/calcAutoDuty'
+        ),
+        'timeout' => (int) env('CUSTOMS_API_TIMEOUT', 30),
+    ],
+
 ];
