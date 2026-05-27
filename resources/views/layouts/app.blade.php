@@ -26,7 +26,6 @@
                     @endif
                 @else
                     <a href="{{ route('company.login') }}" class="nav-link">{{ __('Company Login') }}</a>
-                    <a href="{{ route('admin.login') }}" class="nav-link">{{ __('Admin') }}</a>
                 @endauth
 
                 @include('partials.lang-switch')
