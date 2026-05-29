@@ -58,8 +58,6 @@
 
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
-
-    .honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 </style>
 @endpush
 
@@ -137,10 +135,6 @@
 
             <form method="POST" action="{{ route('contact.send') }}" novalidate>
                 @csrf
-
-                <div class="honeypot" aria-hidden="true">
-                    <label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
-                </div>
 
                 <div class="form-row">
                     <div class="form-group">
