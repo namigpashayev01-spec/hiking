@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'contact' => [
+        'to' => env('CONTACT_TO_EMAIL', 'info@hiking.az'),
+        'phone' => env('CONTACT_PHONE', '+994 12 555 00 00'),
+        'address' => env('CONTACT_ADDRESS', 'Bakı, Azərbaycan'),
+    ],
+
 ];

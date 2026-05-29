@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\CompanyController as AdminCompanyController;
+use App\Http\Controllers\Admin\ContactMessageController as AdminContactMessageController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\TourController as AdminTourController;
 use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\CompanyAuthController;
 use App\Http\Controllers\Company\DashboardController as CompanyDashboardController;
 use App\Http\Controllers\Company\TourController as CompanyTourController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocaleController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tours/{tour:slug}', [HomeController::class, 'show'])->name('tours.show');
+Route::get('/contact', [ContactController::class, 'show'])->name('contact');
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 Route::get('/locale/{locale}', [LocaleController::class, 'switch'])->name('locale.switch');
 
 /*
@@ -75,5 +79,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('companies', [AdminCompanyController::class, 'index'])->name('companies.index');
         Route::post('companies/{company}/approve', [AdminCompanyController::class, 'approve'])->name('companies.approve');
         Route::post('companies/{company}/reject', [AdminCompanyController::class, 'reject'])->name('companies.reject');
+
+        Route::get('messages', [AdminContactMessageController::class, 'index'])->name('messages.index');
+        Route::get('messages/{message}', [AdminContactMessageController::class, 'show'])->name('messages.show');
+        Route::post('messages/{message}/toggle-read', [AdminContactMessageController::class, 'toggleRead'])->name('messages.toggleRead');
+        Route::delete('messages/{message}', [AdminContactMessageController::class, 'destroy'])->name('messages.destroy');
     });
 });

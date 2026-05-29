@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ContactMessage;
 use App\Models\Tour;
 use App\Models\User;
 
@@ -17,6 +18,7 @@ class DashboardController extends Controller
             'companies_total' => User::where('role', User::ROLE_COMPANY)->count(),
             'companies_pending' => User::where('role', User::ROLE_COMPANY)
                 ->where('status', User::STATUS_PENDING)->count(),
+            'messages_unread' => ContactMessage::unread()->count(),
         ];
 
         $pendingTours = Tour::with('user')

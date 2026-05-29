@@ -13,6 +13,7 @@
             <a href="{{ route('home') }}" class="brand"><span class="logo">🏔️</span> {{ config('app.name') }}</a>
             <div class="nav-links">
                 <a href="{{ route('home') }}" class="nav-link">{{ __('Home') }}</a>
+                <a href="{{ route('contact') }}" class="nav-link">{{ __('Contact') }}</a>
 
                 @auth
                     @if (auth()->user()->isCompany())
@@ -38,7 +39,11 @@
     <footer class="footer">
         <div class="container row-between">
             <div>© {{ date('Y') }} {{ config('app.name') }} — {{ __('Discover guided hiking tours across Azerbaijan from trusted companies.') }}</div>
-            <div><a href="{{ route('company.login') }}">{{ __('Company Login') }}</a></div>
+            <div>
+                <a href="{{ route('contact') }}">{{ __('Contact') }}</a>
+                <span style="margin: 0 8px; color: #5a6c64;">·</span>
+                <a href="{{ route('company.login') }}">{{ __('Company Login') }}</a>
+            </div>
         </div>
     </footer>
 

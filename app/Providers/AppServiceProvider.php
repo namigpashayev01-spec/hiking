@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\ContactMessage;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,8 +22,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Use our own framework-free pagination markup.
         Paginator::defaultView('vendor.pagination.custom');
         Paginator::defaultSimpleView('vendor.pagination.custom');
+
+        View::composer('partials.admin-sidebar', function ($view) {
+            $view->with('unreadMessagesCount', ContactMessage::unread()->count());
+        });
     }
 }

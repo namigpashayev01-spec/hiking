@@ -15,8 +15,11 @@
     <div class="stats">
         <div class="stat"><div class="num">{{ $stats['tours_total'] }}</div><div class="label">{{ __('Total tours') }}</div></div>
         <div class="stat"><div class="num">{{ $stats['tours_pending'] }}</div><div class="label">{{ __('Pending tours') }}</div></div>
-        <div class="stat"><div class="num">{{ $stats['companies_total'] }}</div><div class="label">{{ __('Total companies') }}</div></div>
         <div class="stat"><div class="num">{{ $stats['companies_pending'] }}</div><div class="label">{{ __('Pending companies') }}</div></div>
+        <a href="{{ route('admin.messages.index', ['filter' => 'unread']) }}" class="stat" style="text-decoration:none;color:inherit;display:block;">
+            <div class="num">{{ $stats['messages_unread'] }}</div>
+            <div class="label">{{ __('Unread messages') }}</div>
+        </a>
     </div>
 
     <div class="section__head">
