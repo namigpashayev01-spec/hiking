@@ -1,59 +1,145 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# HikingAz
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Azərbaycanda hiking və təbiət turlarını elan etmək üçün Laravel 12 əsaslı platforma. Şirkətlər qeydiyyatdan keçir, admin təsdiqləyir, təsdiqlənmiş şirkətlər tur elanı əlavə edir, admin elanları yoxlayır, yalnız təsdiqlənmiş turlar ana səhifədə görünür.
 
-## About Laravel
+## Texnologiyalar
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Backend:** PHP 8.2+, Laravel 12
+- **Verilənlər bazası:** MySQL 5.7+ (development üçün SQLite də işləyir)
+- **Frontend:** Blade + custom CSS (Tailwind/Vite yoxdur)
+- **Redaktor:** CKEditor 5 (CDN)
+- **Test:** PHPUnit 11
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Xüsusiyyətlər
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- İki rollu istifadəçi sistemi (admin / şirkət) — tək `users` cədvəlində `role` + `status` sütunları
+- Şirkət qeydiyyatı və admin tərəfdən təsdiq / rədd
+- Tur CRUD əməliyyatları (CKEditor ilə zəngin mətn)
+- Admin moderasiya paneli (təsdiq / rədd səbəbi ilə)
+- Çoxdilli interfeys (AZ / EN) — sessiya əsaslı
+- Şəkil yükləmə (`public/uploads/tours/`)
+- "Topoqrafik Ekspedisiya" temalı ana səhifə (Fraunces + Hanken Grotesk, custom palitra)
 
-## Learning Laravel
+## Quraşdırma (lokal)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Tələblər
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP 8.2+ (`pdo_mysql` və ya `pdo_sqlite` aktiv)
+- Composer 2
+- MySQL 5.7+ (və ya XAMPP)
 
-## Laravel Sponsors
+### Addımlar
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+git clone https://github.com/namigpashayev01-spec/hiking.git
+cd hiking
+composer install
+cp .env.example .env
+php artisan key:generate
+```
 
-### Premium Partners
+`.env` faylında verilənlər bazası ayarlarını dolduraraq:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```env
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost:8000
 
-## Contributing
+DB_CONNECTION=mysql
+DB_DATABASE=hiking_search
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+MySQL-də `hiking_search` adlı verilənlər bazası yaradın, sonra:
 
-## Code of Conduct
+```bash
+php artisan migrate --seed
+php artisan serve
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Sayt: <http://localhost:8000>
 
-## Security Vulnerabilities
+## Seed (demo) giriş məlumatları
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+| Rol | Email | Şifrə | Status |
+|---|---|---|---|
+| Admin | `admin@hiking.az` | `password` | Təsdiqlənmiş |
+| Şirkət (təsdiqlənmiş, 3 turu var) | `company@hiking.az` | `password` | Təsdiqlənmiş |
+| Şirkət (gözləyən) | `pending@hiking.az` | `password` | Gözləyir |
 
-## License
+- Admin giriş səhifəsi: `/admin/login`
+- Şirkət giriş səhifəsi: `/company/login`
+- Şirkət qeydiyyatı: `/company/register`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Arxitektura qeydləri
+
+- **Tək `users` cədvəli** — şirkətlər üçün ayrıca `companies` cədvəli yoxdur. Fərq `role` (admin / company) və `status` (pending / approved / rejected) sütunları ilə qoyulur.
+- **`tours` cədvəli** — `title`, `slug`, `description`, `content` (CKEditor HTML), `price`, `image`, `status`, `rejection_reason`.
+- **Middleware:**
+  - `role:admin` və `role:company` — `EnsureRole` (`app/Http/Middleware/EnsureRole.php`). Auth olmayan istifadəçini müvafiq login səhifəsinə yönləndirir.
+  - `company.approved` — `EnsureCompanyApproved`. Gözləyən şirkətə tur əlavə etməyə icazə vermir (tur siyahısını göstərir).
+  - `SetLocale` — sessiya əsasında `app()->setLocale()` çağırır.
+- **Şəkillər:** `public/uploads/tours/`-a birbaşa `move()` ilə yazılır. Storage symlink istifadə edilmir (Windows uyumluluğu).
+- **Tailwind / Vite YOXDUR** — bütün stillər `public/css/`-dədir: `app.css` (ümumi), `home.css` (ana səhifə teması).
+
+## Test
+
+```bash
+php artisan test
+```
+
+Testlər in-memory SQLite-də işləyir (`pdo_sqlite` lazımdır).
+
+## Production-a yerləşdirmə
+
+Ətraflı yerləşdirmə təlimatı: [`DEPLOYMENT.md`](DEPLOYMENT.md).
+
+Qısa addımlar:
+
+```bash
+composer install --no-dev --optimize-autoloader
+php artisan key:generate --force
+php artisan migrate --force
+php artisan db:seed --force   # yalnız ilk dəfə
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php artisan storage:link      # (uploads `public/uploads/`-dadır, lazım deyil)
+```
+
+`.env`-də `APP_ENV=production`, `APP_DEBUG=false`, real `APP_URL` mütləq dəyişdirilməlidir.
+
+## Layihə strukturu
+
+```
+app/
+  Http/
+    Controllers/
+      Admin/        # admin paneli (dashboard, turlar, şirkətlər)
+      Auth/         # admin və şirkət auth
+      Company/      # şirkət paneli (dashboard, turlar)
+      HomeController, LocaleController
+    Middleware/
+      EnsureRole, EnsureCompanyApproved, SetLocale
+  Models/
+    User, Tour
+config/             # standart Laravel konfiqurasiyaları
+database/
+  migrations/       # users, role/status, tours
+  seeders/          # admin, demo şirkət, nümunə turlar
+public/
+  css/              # app.css, home.css (Tailwind yox — custom CSS)
+  uploads/tours/    # tur şəkilləri
+resources/
+  views/            # blade şablonları
+  lang/             # az.json (EN üçün açarların özü işləyir)
+routes/
+  web.php           # bütün marşrutlar
+tests/
+  Feature/TourFlowTest.php  # əsas axın testi
+```
+
+## Lisenziya
+
+MIT
